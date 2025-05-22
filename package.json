@@ -10,7 +10,7 @@
   "scripts": {
     "pipress": "bun --watch ./server/index.mjs",
     "dev": "bun pipress https://raw.githubusercontent.com/pi0/pi0.io/refs/heads/main",
-    "release": "changelogen --release && bun publish && git push --follow-tags"
+    "release": "changelogen --release && npm publish && git push --follow-tags"
   },
   "dependencies": {
     "md4w": "^0.2.6",

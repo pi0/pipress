@@ -18,6 +18,20 @@ All remote content are cached with simple SWR strategy (stale 1 second).
 
 Check the [source code](./server/index.mjs).
 
+## ✅ Local preview
+
+Local dir:
+
+```sh
+npx  pipress .
+```
+
+Or remote URL:
+
+```sh
+npx  pipress https://raw.githubusercontent.com/pi0/pi0.io/refs/heads/main
+```
+
 ## 👉🏻 Self-hosted using docker
 
 **docker-compose.yaml:**

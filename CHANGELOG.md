@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.5
+
+[compare changes](https://github.com/pi0/pipress/compare/v0.0.4...v0.0.5)
+
+### 🩹 Fixes
+
+- Properly use base url arg ([6c98da5](https://github.com/pi0/pipress/commit/6c98da5))
+
+### ❤️ Contributors
+
+- Pooya Parsa ([@pi0](https://github.com/pi0))
+
 ## v0.0.4
 
 [compare changes](https://github.com/pi0/pipress/compare/v0.0.3...v0.0.4)

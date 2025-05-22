@@ -12,12 +12,13 @@ if (!BASE_URL) {
   console.error("Either set PIPRESS_URL or pass it as an argument");
   process.exit(1);
 }
-if (!BASE_URL.endsWith("/")) {
-  BASE_URL += "/";
-}
 
 if (BASE_URL.startsWith(".")) {
   BASE_URL = pathToFileURL(resolve(BASE_URL)).href;
+}
+
+if (!BASE_URL.endsWith("/")) {
+  BASE_URL += "/";
 }
 
 console.log(`🗿 Pipress [${BASE_URL}]`);

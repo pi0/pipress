@@ -1,10 +1,23 @@
 #!/bin/sh
 //bin/true; (command -v bun && bun $0) || (command -v deno && deno -A $0)|| (command -v node && node $0) || exit 1
 
-const sourceBase =
-  process.env.PIPRESS_URL ||
-  process.argv[2] ||
-  new URL("../content/", import.meta.url);
+// ----- Config -----
+
+import { pathToFileURL } from "url";
+
+let BASE_URL = process.env.PIPRESS_URL || process.argv[2];
+
+if (!BASE_URL) {
+  console.error("Either set PIPRESS_URL or pass it as an argument");
+  process.exit(1);
+}
+if (!BASE_URL.endsWith("/")) {
+  BASE_URL += "/";
+}
+
+if (BASE_URL.startsWith(".")) {
+  BASE_URL = pathToFileURL(BASE_URL).href;
+}
 
 const CONTENT_TTL = parseInt(process.env.PIPRESS_TTL || "1000", 10);
 const STATIC_TTL = parseInt(process.env.PIPRESS_STATIC_TTL || "1000", 10);
@@ -27,7 +40,7 @@ serve({
       .replace(/[^/a-zA-Z0-9-_.~]/g, "");
 
     return ext
-      ? serveStatic(url.pathname, ext)
+      ? serveStatic(path, ext)
       : serveMarkdown(`${path || "index"}.md`);
   },
 });
@@ -37,7 +50,7 @@ serve({
 import Mime from "mime";
 
 async function serveStatic(path, ext) {
-  const url = new URL(`./${path}`, sourceBase);
+  const url = new URL(path, BASE_URL);
   const body = await cachedFetch(url, STATIC_TTL).then((res) =>
     res.ok ? res.body : undefined,
   );
@@ -63,12 +76,10 @@ setCodeHighlighter(
 );
 
 async function serveMarkdown(path) {
-  const url = new URL(`./${path}`, sourceBase);
-
   const [md, template] = await Promise.all(
     [
-      cachedFetch(new URL(path, sourceBase), CONTENT_TTL),
-      cachedFetch(new URL("index.html", sourceBase), CONTENT_TTL),
+      cachedFetch(new URL(path, BASE_URL), CONTENT_TTL),
+      cachedFetch(new URL("index.html", BASE_URL), CONTENT_TTL),
     ].map((p) => p.then((res) => (res.ok ? res.text() : ""))),
   );
 
@@ -77,7 +88,7 @@ async function serveMarkdown(path) {
   return new Response(
     renderTemplate(template, {
       content: mdHtml,
-      contentURL: url.toString(),
+      contentURL: new URL(path, BASE_URL).toString(),
     }),
     {
       status: md ? 200 : 404,
@@ -103,6 +114,7 @@ async function cachedFetch(url, ttl = 1000) {
   if (cached?.time > Date.now() - ttl) {
     return cached.promise.then((res) => res.clone());
   }
+  console.log("Fetching", url);
   const promise = fetch(url).catch((_err) => new Response("", { status: 500 }));
   caches.set(url, { promise, time: Date.now() });
   return (cached?.promise || promise).then((res) => res.clone());

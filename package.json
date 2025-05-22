@@ -8,7 +8,8 @@
     "server"
   ],
   "scripts": {
-    "dev": "bun --watch ./server/index.mjs"
+    "pipress": "bun --watch ./server/index.mjs",
+    "dev": "bun pipress https://raw.githubusercontent.com/pi0/pi0.io/refs/heads/main"
   },
   "dependencies": {
     "md4w": "^0.2.6",

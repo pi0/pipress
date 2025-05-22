@@ -1,12 +1,12 @@
-# π pipress
+# 🗿 pipress
 
-🗿 Tiny server to host [pi0.io](https://pi0.io) (or anything else!)
+Tiny server hosting [pi0.io](https://pi0.io) (or anything else!)
 
 ## 💡 How it works?
 
 Idea is simple, Turn any base url with raw Markdown, HTML and Assets into a website!
 
-Website contents can be hosted anywhere, such as from `https://raw.githubusercontent.com/pi0/pi0.io` ([pi0/pi0.io](https://github.com/pi0/pi0.io/).
+Website contents can be hosted anywhere, such as from `https://raw.githubusercontent.com/pi0/pi0.io` ([pi0/pi0.io](https://github.com/pi0/pi0.io/)).
 
 When opening a URL like `/about`, the server fetches `{BASE_URL}/about.md` and renders Markdown to HTML using [md4w](https://github.com/ije/md4w).
 

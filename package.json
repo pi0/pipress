@@ -1,0 +1,24 @@
+{
+  "name": "pipress",
+  "version": "0.0.1",
+  "type": "module",
+  "exports": "./server/index.mjs",
+  "bin": "./server/index.mjs",
+  "files": [
+    "server"
+  ],
+  "scripts": {
+    "dev": "bun --watch ./server/index.mjs"
+  },
+  "dependencies": {
+    "highlight.js": "^11.11.1",
+    "md4w": "^0.2.6",
+    "mime": "^4.0.7",
+    "srvx": "^0.7.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "prettier": "^3.5.3"
+  },
+  "packageManager": "bun@1.2.14"
+}

@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "module": "NodeNext",
+    "noEmit": true,
+    "checkJs": true,
+    "allowImportingTsExtensions": true
+  }
+}

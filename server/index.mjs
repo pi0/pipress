@@ -5,7 +5,7 @@
 
 import { pathToFileURL } from "url";
 
-let BASE_URL = process.env.PIPRESS_URL || process.argv[2];
+let BASE_URL = process.env.PIPRESS_URL || process.argv[1];
 
 if (!BASE_URL) {
   console.error("Either set PIPRESS_URL or pass it as an argument");

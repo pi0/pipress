@@ -16,8 +16,10 @@ The web server then uses `https://raw.pi0.io/index.html` as an HTML template, re
 
 Any other URL ending with an extension, will be directly fetched and served as static asset with proper mime type.
 
+All remote content are cached with simple SWR strategy (stale 1 second).
+
 ## 🧩 Stack
 
 - **Server:** [srvx](https://srvx.h3.dev)
 - **Markdown Renderer:** [ije/md4w](https://github.com/ije/md4w)
-- **Code highlighter:** [highlightjs](https://highlightjs.org/)
+- **Code highlighter:** [shikijs](https://shiki.style/)

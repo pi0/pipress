@@ -42,13 +42,18 @@ async function serveStatic(path, ext) {
 // ----- Markdown -----
 
 import { init as initmd4w, mdToHtml, setCodeHighlighter } from "md4w";
-import hljs from "highlight.js";
+import { createHighlighter } from "shiki";
 
 await initmd4w("fast");
 
+const highlighter = await createHighlighter({
+  themes: ["dark-plus"],
+  langs: ["javascript", "bash", "html", "css", "json", "yaml", "markdown"],
+});
+
 setCodeHighlighter(
-  (language, code) =>
-    `<pre><code>${hljs.highlight(code, { language }).value}</code></pre>`,
+  (lang, code) =>
+    `<pre><code>${highlighter.codeToHtml(code, { lang, theme: "dark-plus" })}</code></pre>`,
 );
 
 async function serveMarkdown(path) {
@@ -89,14 +94,10 @@ const caches = new Map();
 async function cachedFetch(url, ttl = 1000) {
   url = url.toString();
   const cached = caches.get(url);
-  if (cached) {
-    if (cached.time > Date.now() - ttl) {
-      return cached.promise.then((res) => res.clone());
-    } else {
-      caches.delete(url);
-    }
+  if (cached?.time > Date.now() - ttl) {
+    return cached.promise.then((res) => res.clone());
   }
   const promise = fetch(url).catch((_err) => new Response("", { status: 500 }));
   caches.set(url, { promise, time: Date.now() });
-  return promise.then((res) => res.clone());
+  return (cached?.promise || promise).then((res) => res.clone());
 }

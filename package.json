@@ -11,9 +11,9 @@
     "dev": "bun --watch ./server/index.mjs"
   },
   "dependencies": {
-    "highlight.js": "^11.11.1",
     "md4w": "^0.2.6",
     "mime": "^4.0.7",
+    "shiki": "^3.4.2",
     "srvx": "^0.7.1"
   },
   "devDependencies": {

@@ -1,12 +1,12 @@
 #!/bin/sh
-//bin/true; (command -v bun && bun $0) || (command -v deno && deno -A $0)|| (command -v node && node $0) || exit 1
+//bin/true; (command -v bun && bun $0 $@) || (command -v deno && deno -A $0 $@)|| (command -v node && node $0 $@) || exit 1
 
 // ----- Config -----
 
 import { pathToFileURL } from "url";
 import { resolve } from "path";
 
-let BASE_URL = process.env.PIPRESS_URL || process.argv[1];
+let BASE_URL = process.env.PIPRESS_URL || process.argv[2];
 
 if (!BASE_URL) {
   console.error("Either set PIPRESS_URL or pass it as an argument");
@@ -19,6 +19,8 @@ if (!BASE_URL.endsWith("/")) {
 if (BASE_URL.startsWith(".")) {
   BASE_URL = pathToFileURL(resolve(BASE_URL)).href;
 }
+
+console.log(`🗿 Pipress [${BASE_URL}]`);
 
 const CONTENT_TTL = parseInt(process.env.PIPRESS_TTL || "1000", 10);
 const STATIC_TTL = parseInt(process.env.PIPRESS_STATIC_TTL || "1000", 10);

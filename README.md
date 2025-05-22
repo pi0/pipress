@@ -2,7 +2,7 @@
 
 🗿 Tiny server to host [pi0.io](https://pi0.io) (or anything else!)
 
-## 💡How it works?
+## 💡 How it works?
 
 Idea is simple, Turn any base url with raw Markdown, HTML and Assets into a website!
 
@@ -17,6 +17,12 @@ The web server then uses `https://raw.pi0.io/index.html` as an HTML template, re
 Any other URL ending with an extension, will be directly fetched and served as static asset with proper mime type.
 
 All remote content are cached with simple SWR strategy (stale 1 second).
+
+## ⚙️ Env variables
+
+- `PIPRESS_URL`
+- `PIPRESS_TTL` (default `1000`)
+- `PIPRESS_STATIC_TTL` (default `1000`)
 
 ## 🧩 Stack
 

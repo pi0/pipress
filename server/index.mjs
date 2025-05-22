@@ -16,10 +16,16 @@ import { serve } from "srvx";
 serve({
   async fetch(req) {
     const url = new URL(req.url);
+
+    if (url.pathname === "/.well-known/appspecific/com.chrome.devtools.json") {
+      return Response.json({ "🖕": "🖕" });
+    }
+
     const ext = url.pathname.match(/\.([a-z0-9%]+)$/)?.[1];
     const path = url.pathname
       .replace(/^\/|\/$/g, "")
       .replace(/[^/a-zA-Z0-9-_.~]/g, "");
+
     return ext
       ? serveStatic(url.pathname, ext)
       : serveMarkdown(`${path || "index"}.md`);

@@ -4,6 +4,7 @@
 // ----- Config -----
 
 import { pathToFileURL } from "url";
+import { resolve } from "path";
 
 let BASE_URL = process.env.PIPRESS_URL || process.argv[1];
 
@@ -16,7 +17,7 @@ if (!BASE_URL.endsWith("/")) {
 }
 
 if (BASE_URL.startsWith(".")) {
-  BASE_URL = pathToFileURL(BASE_URL).href;
+  BASE_URL = pathToFileURL(resolve(BASE_URL)).href;
 }
 
 const CONTENT_TTL = parseInt(process.env.PIPRESS_TTL || "1000", 10);

@@ -18,6 +18,24 @@ All remote content are cached with simple SWR strategy (stale 1 second).
 
 Check the [source code](./server/index.mjs).
 
+## 👉🏻 Self-hosted using docker
+
+**docker-compose.yaml:**
+
+```yaml
+services:
+  www:
+    image: ghcr.io/pi0/pipress
+    restart: unless-stopped
+    environment:
+      PIPRESS_URL: "https://raw.githubusercontent.com/pi0/pi0.io/refs/heads/main"
+    ports:
+      - 3140:3000
+```
+
+> [!TIP]
+> Use https://github.com/containrrr/watchtower for auto updates
+
 ## ⚙️ Env variables
 
 - `PIPRESS_URL`

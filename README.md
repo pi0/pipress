@@ -6,7 +6,7 @@ Tiny server hosting [pi0.io](https://pi0.io) (or anything else!)
 
 Idea is simple, Turn any base url with raw Markdown, HTML and Assets into a website!
 
-Website contents can be hosted anywhere, such as from `https://cdn.jsdelivr.net/gh/pi0/pi0.io/` ([pi0/pi0.io](https://github.com/pi0/pi0.io/)).
+Website contents can be hosted anywhere, such as from `https://raw.githubusercontent.com/pi0/pi0.io/refs/heads/main` ([pi0/pi0.io](https://github.com/pi0/pi0.io/)).
 
 When opening a URL like `/about`, the server fetches `{BASE_URL}/about.md` and renders Markdown to HTML using [md4w](https://github.com/ije/md4w).
 
@@ -23,13 +23,13 @@ Check the [source code](./server/index.mjs).
 Local dir:
 
 ```sh
-npx  pipress .
+npx pipress .
 ```
 
 Or remote URL:
 
 ```sh
-npx pipress https://cdn.jsdelivr.net/gh/pi0/pi0.io/
+npx pipress https://raw.githubusercontent.com/pi0/pi0.io/refs/heads/main
 ```
 
 ## 👉🏻 Self-hosted using docker
@@ -42,7 +42,7 @@ services:
     image: ghcr.io/pi0/pipress
     restart: unless-stopped
     environment:
-      PIPRESS_URL: "https://cdn.jsdelivr.net/gh/pi0/pi0.io/"
+      PIPRESS_URL: "https://raw.githubusercontent.com/pi0/pi0.io/refs/heads/main"
     ports:
       - 3140:3000
 ```

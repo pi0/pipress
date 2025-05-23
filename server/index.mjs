@@ -21,6 +21,12 @@ if (!BASE_URL.endsWith("/")) {
   BASE_URL += "/";
 }
 
+const FS_MODE = BASE_URL.startsWith("file://");
+
+function url(path) {
+  return new URL(FS_MODE ? path : `${path}?${Date.now()}`, BASE_URL).href;
+}
+
 console.log(`🗿 Pipress [${BASE_URL}]`);
 
 const CONTENT_TTL = parseInt(process.env.PIPRESS_TTL || "1000", 10);
@@ -82,8 +88,8 @@ setCodeHighlighter(
 async function serveMarkdown(path) {
   const [md, template] = await Promise.all(
     [
-      cachedFetch(new URL(path, BASE_URL), CONTENT_TTL),
-      cachedFetch(new URL("index.html", BASE_URL), CONTENT_TTL),
+      cachedFetch(url(path), CONTENT_TTL),
+      cachedFetch(url("index.html"), CONTENT_TTL),
     ].map((p) => p.then((res) => (res.ok ? res.text() : ""))),
   );
 
@@ -92,7 +98,7 @@ async function serveMarkdown(path) {
   return new Response(
     renderTemplate(template, {
       content: mdHtml,
-      contentURL: new URL(path, BASE_URL).toString(),
+      contentURL: url(path),
     }),
     {
       status: md ? 200 : 404,

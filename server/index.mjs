@@ -70,7 +70,7 @@ async function serveStatic(path, ext) {
 }
 // ----- Markdown -----
 
-import { init as initmd4w, mdToHtml, setCodeHighlighter } from "md4w";
+import { init as initmd4w, mdToHtml, mdToJSON, setCodeHighlighter } from "md4w";
 import { createHighlighter } from "shiki";
 
 await initmd4w("fast");
@@ -93,11 +93,14 @@ async function serveMarkdown(path) {
     ].map((p) => p.then((res) => (res.ok ? res.text() : ""))),
   );
 
+  const title = (md || "").match(/^#\s+([^\n]+)/)?.[1] || "";
+
   const mdHtml = mdToHtml(md || "(404)");
 
   return new Response(
     renderTemplate(template, {
       content: mdHtml,
+      title,
       contentURL: url(path),
     }),
     {
